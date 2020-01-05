@@ -255,7 +255,7 @@
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// add
 </span><span class="n">libraryDependencies</span> <span class="o">+=</span>
   <span class="s">"synapses"</span> <span class="o">%</span> <span class="s">"scala_2.13"</span> <span class="o">%</span> <span class="s">"7.1.0"</span> <span class="n">from</span>
-    <span class="s">"https://github.com/mrdimosthenis/Synapses/releases/download/7.1.0/synapses-assembly-7.1.0.jar"</span>
+    <span class="s">"""https://github.com/mrdimosthenis/Synapses/releases/download/7.1.0/synapses-assembly-7.1.0.jar"""</span>
 <span class="c1">// to build.sbt
 </span></code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="c1">// run
 </span><span class="n">dotnet</span> <span class="n">add</span> <span class="n">package</span> <span class="nc">Synapses</span> <span class="o">--</span><span class="n">version</span> <span class="mi">7</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span>
@@ -275,24 +275,53 @@
 <p><code>neuralNetwork</code> has 4 layers. The first layer has 4 input nodes and the last layer has 3 output nodes.
 There are 2 hidden layers with 6 and 5 neurons respectively.</p>
 <h3 id='get-a-prediction'>Get a prediction</h3><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">inputValues</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5625</span><span class="p">,</span> <span class="mf">0.511111</span><span class="p">,</span> <span class="mf">0.47619</span><span class="p">];</span>
-<span class="kd">let</span> <span class="nx">prediction</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">prediction</span><span class="p">(</span><span class="nx">neuralNetwork</span><span class="p">,</span> <span class="nx">inputValues</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">prediction</span> <span class="o">=</span>
+        <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">prediction</span><span class="p">(</span><span class="nx">neuralNetwork</span><span class="p">,</span> <span class="nx">inputValues</span><span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">inputValues</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mf">1.0</span><span class="o">,</span> <span class="mf">0.5625</span><span class="o">,</span> <span class="mf">0.511111</span><span class="o">,</span> <span class="mf">0.47619</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">prediction</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">prediction</span><span class="o">(</span><span class="n">neuralNetwork</span><span class="o">,</span> <span class="n">inputValues</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">prediction</span> <span class="k">=</span>
+        <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">prediction</span><span class="o">(</span><span class="n">neuralNetwork</span><span class="o">,</span> <span class="n">inputValues</span><span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">inputValues</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5625</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">511111</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">47619</span><span class="p">]</span>
-<span class="k">let</span> <span class="n">prediction</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">prediction</span><span class="p">(</span><span class="n">neuralNetwork</span><span class="p">,</span> <span class="n">inputValues</span><span class="p">)</span>
+<span class="k">let</span> <span class="n">prediction</span> <span class="p">=</span>
+        <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">prediction</span><span class="p">(</span><span class="n">neuralNetwork</span><span class="p">,</span> <span class="n">inputValues</span><span class="p">)</span>
 </code></pre>
-<p>Note that the lengths of <code>inputValues</code> and <code>prediction</code> equal to the sizes of <em>input</em> and <em>output</em> layers respectively.</p>
+<p><code>prediction</code> should be something like <code>[ 0.8296, 0.6996, 0.4541 ]</code>.</p>
+
+<aside class="success">
+Note that the lengths of inputValues and prediction equal to the sizes of input and output layers respectively.
+</aside>
 <h3 id='fit-network'>Fit network</h3><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">learningRate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">expectedOutput</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">];</span>
-<span class="kd">let</span> <span class="nx">fitNetwork</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">neuralNetwork</span><span class="p">,</span> <span class="nx">learningRate</span><span class="p">,</span> <span class="nx">inputValues</span><span class="p">,</span> <span class="nx">expectedOutput</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">fitNetwork</span> <span class="o">=</span>
+        <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span>
+                            <span class="nx">neuralNetwork</span><span class="p">,</span>
+                            <span class="nx">learningRate</span><span class="p">,</span>
+                            <span class="nx">inputValues</span><span class="p">,</span>
+                            <span class="nx">expectedOutput</span>
+        <span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">learningRate</span> <span class="k">=</span> <span class="mf">0.5</span>
 <span class="k">val</span> <span class="n">expectedOutput</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">fitNetwork</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">neuralNetwork</span><span class="o">,</span> <span class="n">learningRate</span><span class="o">,</span> <span class="n">inputValues</span><span class="o">,</span> <span class="n">expectedOutput</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">fitNetwork</span> <span class="k">=</span>
+        <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span>
+                            <span class="n">neuralNetwork</span><span class="o">,</span>
+                            <span class="n">learningRate</span><span class="o">,</span>
+                            <span class="n">inputValues</span><span class="o">,</span>
+                            <span class="n">expectedOutpu</span>
+        <span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">learningRate</span> <span class="p">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
 <span class="k">let</span> <span class="n">expectedOutput</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">]</span>
-<span class="k">let</span> <span class="n">fitNetwork</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">neuralNetwork</span><span class="p">,</span> <span class="n">learningRate</span><span class="p">,</span> <span class="n">inputValues</span><span class="p">,</span> <span class="n">expectedOutput</span><span class="p">)</span>
+<span class="k">let</span> <span class="n">fitNetwork</span> <span class="p">=</span>
+        <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span>
+                            <span class="n">neuralNetwork</span><span class="p">,</span>
+                            <span class="n">learningRate</span><span class="p">,</span>
+                            <span class="n">inputValues</span><span class="p">,</span>
+                            <span class="n">expectedOutput</span>
+        <span class="p">)</span>
 </code></pre>
 <p><code>fitNetwork</code> is a new neural network trained with a single observation.</p>
+
+<blockquote>
+<p>to train a neural network, you should fit with multiple datapoints</p>
+</blockquote>
 <h3 id='create-a-customized-neural-network'>Create a customized neural network</h3>
 <p>The <em>activation function</em> of the neurons created with <code>NeuralNetwork.init</code>, is a sigmoid one.
 If you want to customize the <em>activation functions</em> and the <em>weight distribution</em>, call <code>NeuralNetwork.customizedInit</code>.</p>
@@ -313,7 +342,12 @@ If you want to customize the <em>activation functions</em> and the <em>weight di
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
 <span class="p">}</span>
 
-<span class="kd">let</span> <span class="nx">customizedNetwork</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">customizedInit</span><span class="p">(</span><span class="nx">layers</span><span class="p">,</span> <span class="nx">activationF</span><span class="p">,</span> <span class="nx">weightInitF</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">customizedNetwork</span> <span class="o">=</span>
+        <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">customizedInit</span><span class="p">(</span>
+                                        <span class="nx">layers</span><span class="p">,</span>
+                                        <span class="nx">activationF</span><span class="p">,</span>
+                                        <span class="nx">weightInitF</span>
+        <span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">def</span> <span class="n">activationF</span><span class="o">(</span><span class="n">layerIndex</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">ActivationFunction</span> <span class="o">=</span>
   <span class="n">layerIndex</span> <span class="k">match</span> <span class="o">{</span>
     <span class="k">case</span> <span class="mi">0</span> <span class="k">=&gt;</span> <span class="nc">ActivationFunction</span><span class="o">.</span><span class="n">sigmoid</span>
@@ -322,9 +356,15 @@ If you want to customize the <em>activation functions</em> and the <em>weight di
     <span class="k">case</span> <span class="mi">3</span> <span class="k">=&gt;</span> <span class="nc">ActivationFunction</span><span class="o">.</span><span class="n">tanh</span>
   <span class="o">}</span>
 
-<span class="k">def</span> <span class="n">weightInitF</span><span class="o">(</span><span class="nc">_layerIndex</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">().</span><span class="n">nextDouble</span><span class="o">()</span>
+<span class="k">def</span> <span class="n">weightInitF</span><span class="o">(</span><span class="nc">_layerIndex</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span>
+        <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">().</span><span class="n">nextDouble</span><span class="o">()</span>
 
-<span class="k">val</span> <span class="n">customizedNetwork</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">customizedInit</span><span class="o">(</span><span class="n">layers</span><span class="o">,</span> <span class="n">activationF</span><span class="o">,</span> <span class="n">weightInitF</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">customizedNetwork</span> <span class="k">=</span>
+        <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">customizedInit</span><span class="o">(</span>
+                                      <span class="n">layers</span><span class="o">,</span>
+                                      <span class="n">activationF</span><span class="o">,</span>
+                                      <span class="n">weightInitF</span>
+        <span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">activationF</span> <span class="p">(</span><span class="n">layerIndex</span><span class="p">:</span> <span class="kt">int</span><span class="p">)</span>
         <span class="p">:</span> <span class="nc">ActivationFunction</span> <span class="p">=</span>
         <span class="k">match</span> <span class="n">layerIndex</span> <span class="k">with</span>
@@ -333,9 +373,15 @@ If you want to customize the <em>activation functions</em> and the <em>weight di
         <span class="p">|</span> <span class="mi">2</span> <span class="p">-&gt;</span> <span class="nn">ActivationFunction</span><span class="p">.</span><span class="n">leakyReLU</span>
         <span class="p">|</span> <span class="p">_</span> <span class="p">-&gt;</span> <span class="nn">ActivationFunction</span><span class="p">.</span><span class="n">identity</span>
 
-<span class="k">let</span> <span class="n">weightInitF</span> <span class="o">(_</span><span class="n">layerIndex</span><span class="p">:</span> <span class="kt">int</span><span class="o">):</span> <span class="kt">float</span> <span class="p">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="p">-</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="p">*</span> <span class="nn">System</span><span class="p">.</span><span class="nc">Random</span><span class="bp">()</span><span class="p">.</span><span class="nc">NextDouble</span><span class="bp">()</span>
+<span class="k">let</span> <span class="n">weightInitF</span> <span class="o">(_</span><span class="n">layerIndex</span><span class="p">:</span> <span class="kt">int</span><span class="o">):</span> <span class="kt">float</span> <span class="p">=</span>
+        <span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="p">-</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="p">*</span> <span class="nn">System</span><span class="p">.</span><span class="nc">Random</span><span class="bp">()</span><span class="p">.</span><span class="nc">NextDouble</span><span class="bp">()</span>
 
-<span class="k">let</span> <span class="n">customizedNetwork</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">customizedInit</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">activationF</span><span class="p">,</span> <span class="n">weightInitF</span><span class="p">)</span>
+<span class="k">let</span> <span class="n">customizedNetwork</span> <span class="p">=</span>
+        <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">customizedInit</span><span class="p">(</span>
+                                        <span class="n">layers</span><span class="p">,</span>
+                                        <span class="n">activationF</span><span class="p">,</span>
+                                        <span class="n">weightInitF</span>
+        <span class="p">)</span>
 </code></pre><h2 id='save-and-load-a-neural-network'>Save and load a neural network</h2>
 <p>JSON instances are <strong>compatible</strong> across platforms!
 We can generate, train and save a neural network in Scala
@@ -343,9 +389,9 @@ and then load and make predictions in Javascript!</p>
 <h3 id='tojson'>toJson</h3>
 <p>Call <code>NeuralNetwork.toJson</code> on a neural network and get a string representation of it.
 Use it as you like. Save <code>json</code> in the file system or insert into a database table.</p>
-<pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">toJson</span><span class="p">(</span><span class="nx">fitNetwork</span><span class="p">);</span>
-</code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">json</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">toJson</span><span class="o">(</span><span class="n">fitNetwork</span><span class="o">)</span>
-</code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">json</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">fitNetwork</span><span class="p">)</span>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">toJson</span><span class="p">(</span><span class="nx">customizedNetwork</span><span class="p">);</span>
+</code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">json</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">toJson</span><span class="o">(</span><span class="n">customizedNetwork</span><span class="o">)</span>
+</code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">json</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">customizedNetwork</span><span class="p">)</span>
 </code></pre><h3 id='ofjson'>ofJson</h3><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">loadedNetwork</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">ofJson</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">loadedNetwork</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">ofJson</span><span class="o">(</span><span class="n">json</span><span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">loadedNetwork</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">ofJson</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
@@ -381,20 +427,25 @@ You can use <code>DataPreprocessor</code> for datapoint encoding and decoding.</
     <span class="na">species</span><span class="p">:</span> <span class="s2">"virginica"</span>
 <span class="p">};</span>
 
-<span class="kd">let</span> <span class="nx">datasetArr</span> <span class="o">=</span> <span class="p">[</span><span class="nx">setosaDatapoint</span><span class="p">,</span> <span class="nx">versicolorDatapoint</span><span class="p">,</span> <span class="nx">virginicaDatapoint</span><span class="p">];</span>
+<span class="kd">let</span> <span class="nx">datasetArr</span> <span class="o">=</span> <span class="p">[</span> <span class="nx">setosaDatapoint</span><span class="p">,</span>
+                   <span class="nx">versicolorDatapoint</span><span class="p">,</span>
+                   <span class="nx">virginicaDatapoint</span> <span class="p">];</span>
 
 <span class="kd">let</span> <span class="nx">datasetIter</span> <span class="o">=</span> <span class="nx">datasetArr</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
 
-<span class="kd">let</span> <span class="nx">dataPreprocessor</span> <span class="o">=</span> <span class="nx">DataPreprocessor</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span>
-                            <span class="p">[</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
-                              <span class="p">[</span><span class="s2">"sepal_width"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
-                              <span class="p">[</span><span class="s2">"petal_length"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
-                              <span class="p">[</span><span class="s2">"petal_width"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
-                              <span class="p">[</span><span class="s2">"species"</span><span class="p">,</span> <span class="kc">true</span><span class="p">]</span> <span class="p">],</span>
-                            <span class="nx">datasetIter</span>
-                       <span class="p">);</span>
+<span class="kd">let</span> <span class="nx">dataPreprocessor</span> <span class="o">=</span>
+        <span class="nx">DataPreprocessor</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span>
+             <span class="p">[</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
+               <span class="p">[</span><span class="s2">"sepal_width"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
+               <span class="p">[</span><span class="s2">"petal_length"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
+               <span class="p">[</span><span class="s2">"petal_width"</span><span class="p">,</span> <span class="kc">false</span><span class="p">],</span>
+               <span class="p">[</span><span class="s2">"species"</span><span class="p">,</span> <span class="kc">true</span><span class="p">]</span> <span class="p">],</span>
+             <span class="nx">datasetIter</span>
+        <span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">encodedDatapoints</span> <span class="o">=</span> <span class="nx">datasetArr</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="o">=&gt;</span> <span class="nx">DataPreprocessor</span><span class="p">.</span><span class="nx">encodedDatapoint</span><span class="p">(</span><span class="nx">dataPreprocessor</span><span class="p">,</span> <span class="nx">x</span><span class="p">));</span>
+<span class="kd">let</span> <span class="nx">encodedDatapoints</span> <span class="o">=</span> <span class="nx">datasetArr</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="o">=&gt;</span>
+        <span class="nx">DataPreprocessor</span><span class="p">.</span><span class="nx">encodedDatapoint</span><span class="p">(</span><span class="nx">dataPreprocessor</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+<span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">setosaDatapoint</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span>
   <span class="s">"petal_length"</span> <span class="o">-&gt;</span> <span class="s">"1.5"</span><span class="o">,</span>
   <span class="s">"petal_width"</span> <span class="o">-&gt;</span> <span class="s">"0.1"</span><span class="o">,</span>
@@ -419,18 +470,25 @@ You can use <code>DataPreprocessor</code> for datapoint encoding and decoding.</
   <span class="s">"species"</span> <span class="o">-&gt;</span> <span class="s">"virginica"</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="nc">LazyList</span><span class="o">(</span><span class="n">setosaDatapoint</span><span class="o">,</span> <span class="n">versicolorDatapoint</span><span class="o">,</span> <span class="n">virginicaDatapoint</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="nc">LazyList</span><span class="o">(</span>
+                        <span class="n">setosaDatapoint</span><span class="o">,</span>
+                        <span class="n">versicolorDatapoint</span><span class="o">,</span>
+                        <span class="n">virginicaDatapoint</span>
+                      <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">dataPreprocessor</span> <span class="k">=</span> <span class="nc">DataPreprocessor</span><span class="o">.</span><span class="n">init</span><span class="o">(</span>
-                            <span class="nc">List</span><span class="o">(</span> <span class="o">(</span><span class="s">"sepal_length"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
-                                  <span class="o">(</span><span class="s">"sepal_width"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
-                                  <span class="o">(</span><span class="s">"petal_length"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
-                                  <span class="o">(</span><span class="s">"petal_width"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
-                                  <span class="o">(</span><span class="s">"species"</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span> <span class="o">),</span>
-                            <span class="n">dataset</span>
-                       <span class="o">)</span>
+<span class="k">val</span> <span class="n">dataPreprocessor</span> <span class="k">=</span>
+        <span class="nc">DataPreprocessor</span><span class="o">.</span><span class="n">init</span><span class="o">(</span>
+             <span class="nc">List</span><span class="o">(</span> <span class="o">(</span><span class="s">"sepal_length"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
+                   <span class="o">(</span><span class="s">"sepal_width"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
+                   <span class="o">(</span><span class="s">"petal_length"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
+                   <span class="o">(</span><span class="s">"petal_width"</span><span class="o">,</span> <span class="kc">false</span><span class="o">),</span>
+                   <span class="o">(</span><span class="s">"species"</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span> <span class="o">),</span>
+             <span class="n">dataset</span>
+        <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">encodedDatapoints</span> <span class="k">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="nc">DataPreprocessor</span><span class="o">.</span><span class="n">encodedDatapoint</span><span class="o">(</span><span class="n">dataPreprocessor</span><span class="o">,</span> <span class="n">x</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">encodedDatapoints</span> <span class="k">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span>
+        <span class="nc">DataPreprocessor</span><span class="o">.</span><span class="n">encodedDatapoint</span><span class="o">(</span><span class="n">dataPreprocessor</span><span class="o">,</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">setosaDatapoint</span> <span class="p">=</span>
         <span class="nn">Map</span><span class="p">.</span><span class="n">ofList</span>
             <span class="p">[</span> <span class="p">(</span><span class="s2">"petal_length"</span><span class="p">,</span> <span class="s2">"1.5"</span><span class="p">)</span>
@@ -460,19 +518,29 @@ You can use <code>DataPreprocessor</code> for datapoint encoding and decoding.</
                   <span class="n">versicolorDatapoint</span>
                   <span class="n">virginicaDatapoint</span> <span class="p">]</span>
 
-<span class="k">let</span> <span class="n">dataPreprocessor</span> <span class="p">=</span> <span class="nn">DataPreprocessor</span><span class="p">.</span><span class="n">init</span><span class="p">(</span>
-                            <span class="p">[</span> <span class="p">(</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
-                              <span class="p">(</span><span class="s2">"sepal_width"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
-                              <span class="p">(</span><span class="s2">"petal_length"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
-                              <span class="p">(</span><span class="s2">"petal_width"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
-                              <span class="p">(</span><span class="s2">"species"</span><span class="p">,</span> <span class="bp">true</span><span class="p">)</span> <span class="o">],</span>
-                            <span class="n">dataset</span>
-                       <span class="p">)</span>
+<span class="k">let</span> <span class="n">dataPreprocessor</span> <span class="p">=</span>
+        <span class="nn">DataPreprocessor</span><span class="p">.</span><span class="n">init</span><span class="p">(</span>
+             <span class="p">[</span> <span class="p">(</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
+               <span class="p">(</span><span class="s2">"sepal_width"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
+               <span class="p">(</span><span class="s2">"petal_length"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
+               <span class="p">(</span><span class="s2">"petal_width"</span><span class="p">,</span> <span class="bp">false</span><span class="p">)</span>
+               <span class="p">(</span><span class="s2">"species"</span><span class="p">,</span> <span class="bp">true</span><span class="p">)</span> <span class="o">],</span>
+             <span class="n">dataset</span>
+        <span class="p">)</span>
 
 <span class="k">let</span> <span class="n">encodedDatapoints</span> <span class="p">=</span>
-        <span class="nn">Seq</span><span class="p">.</span><span class="n">map</span> <span class="p">(</span><span class="k">fun</span> <span class="n">datapoint</span> <span class="p">-&gt;</span> <span class="nn">DataPreprocessor</span><span class="p">.</span><span class="n">encodedDatapoint</span><span class="p">(</span><span class="n">dataPreprocessor</span><span class="p">,</span> <span class="n">datapoint</span><span class="o">))</span>
+        <span class="nn">Seq</span><span class="p">.</span><span class="n">map</span> <span class="p">(</span><span class="k">fun</span> <span class="n">datapoint</span> <span class="p">-&gt;</span>
+                    <span class="nn">DataPreprocessor</span><span class="p">.</span><span class="n">encodedDatapoint</span><span class="p">(</span><span class="n">dataPreprocessor</span><span class="p">,</span> <span class="n">datapoint</span><span class="p">)</span>
+                <span class="p">)</span>
                 <span class="n">dataset</span>
 </code></pre>
+<blockquote>
+<p><code>encodedDatapoints</code> equals to</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">0.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="err">;</span><span class="w"> </span><span class="mf">0.0</span><span class="err">;</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">],</span><span class="w">
+  </span><span class="p">[</span><span class="w"> </span><span class="mf">1.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">0.562500</span><span class="p">,</span><span class="w"> </span><span class="mf">0.511111</span><span class="p">,</span><span class="w"> </span><span class="mf">0.476190</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="err">;</span><span class="w"> </span><span class="mf">1.0</span><span class="err">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">],</span><span class="w">
+  </span><span class="p">[</span><span class="w"> </span><span class="mf">0.166667</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="err">;</span><span class="w"> </span><span class="mf">0.0</span><span class="err">;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p>Save and load the preprocessor by calling <code>DataPreprocessor.toJson</code> and <code>DataPreprocessor.ofJson</code>.</p>
 <h2 id='evaluation'>Evaluation</h2>
 <p>To evaluate a neural network, you can call <code>Statistics.rootMeanSquareError</code> and provide the expected and predicted values.</p>
@@ -480,21 +548,28 @@ You can use <code>DataPreprocessor</code> for datapoint encoding and decoding.</
         <span class="p">[</span> <span class="p">[</span> <span class="p">[</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span> <span class="p">],</span>
           <span class="p">[</span> <span class="p">[</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span> <span class="p">]</span> <span class="p">];</span>
 
-<span class="kd">let</span> <span class="nx">expectedWithOutputValuesIter</span> <span class="o">=</span> <span class="nx">expectedWithOutputValuesArr</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+<span class="kd">let</span> <span class="nx">expectedWithOutputValuesIter</span> <span class="o">=</span>
+        <span class="nx">expectedWithOutputValuesArr</span><span class="p">[</span><span class="nx">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
 
-<span class="kd">let</span> <span class="nx">rmse</span> <span class="o">=</span> <span class="nx">Statistics</span><span class="p">.</span><span class="nx">rootMeanSquareError</span><span class="p">(</span><span class="nx">expectedWithOutputValuesIter</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">rmse</span> <span class="o">=</span> <span class="nx">Statistics</span><span class="p">.</span><span class="nx">rootMeanSquareError</span><span class="p">(</span>
+                        <span class="nx">expectedWithOutputValuesIter</span>
+<span class="p">);</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">expectedWithOutputValues</span> <span class="k">=</span>
     <span class="nc">LazyList</span><span class="o">(</span>
       <span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">),</span> <span class="nc">List</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">)),</span>
       <span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">),</span> <span class="nc">List</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">))</span>
     <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">rmse</span> <span class="k">=</span> <span class="nc">Statistics</span><span class="o">.</span><span class="n">rootMeanSquareError</span><span class="o">(</span><span class="n">expectedWithOutputValues</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">rmse</span> <span class="k">=</span> <span class="nc">Statistics</span><span class="o">.</span><span class="n">rootMeanSquareError</span><span class="o">(</span>
+                        <span class="n">expectedWithOutputValues</span>
+<span class="o">)</span>
 </code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">expectedWithOutputValues</span> <span class="p">=</span>
         <span class="nn">Seq</span><span class="p">.</span><span class="n">ofList</span> <span class="p">[</span> <span class="p">(</span> <span class="p">[</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="o">],</span> <span class="p">[</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span>
                      <span class="p">(</span> <span class="p">[</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="o">],</span> <span class="p">[</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
 
-<span class="k">let</span> <span class="n">rmse</span> <span class="p">=</span> <span class="nn">Statistics</span><span class="p">.</span><span class="n">rootMeanSquareError</span> <span class="n">expectedWithOutputValues</span>
+<span class="k">let</span> <span class="n">rmse</span> <span class="p">=</span> <span class="nn">Statistics</span><span class="p">.</span><span class="n">rootMeanSquareError</span><span class="p">(</span>
+                        <span class="n">expectedWithOutputValues</span>
+<span class="p">)</span>
 </code></pre>
       </div>
       <div class="dark-box">
