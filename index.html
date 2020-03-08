@@ -241,6 +241,9 @@
                     <a href="#neural-network" class="toc-h2 toc-link" data-title="Neural Network">Neural Network</a>
                   </li>
                   <li>
+                    <a href="#visualize-a-neural-network" class="toc-h2 toc-link" data-title="Visualize a neural network">Visualize a neural network</a>
+                  </li>
+                  <li>
                     <a href="#save-and-load-a-neural-network" class="toc-h2 toc-link" data-title="Save and load a neural network">Save and load a neural network</a>
                   </li>
                   <li>
@@ -264,27 +267,27 @@
         <h1 id='synapses'>Synapses</h1>
 <p><strong>Synapses</strong> is a <strong>lightweight</strong> library for <strong>neural networks</strong> that <strong>runs anywhere</strong>.</p>
 <pre class="highlight javascript tab-javascript"><code><span class="c1">// run</span>
-<span class="nx">npm</span> <span class="nx">i</span> <span class="nx">synapses</span><span class="p">@</span><span class="nd">7</span><span class="p">.</span><span class="mf">2.1</span>
+<span class="nx">npm</span> <span class="nx">i</span> <span class="nx">synapses</span><span class="p">@</span><span class="nd">7</span><span class="p">.</span><span class="mf">3.0</span>
 <span class="c1">// in the directory of your node project</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># run</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">synapses</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">7.2</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">synapses</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">7.3</span><span class="o">.</span><span class="mi">0</span>
 <span class="c"># in the directory of your project</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="c1">// add</span>
 <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">mrdimosthenis</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">synapses_2</span><span class="o">.</span><span class="mi">13</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">7.2</span><span class="o">.</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">7.3</span><span class="o">.</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
 <span class="c1">// to pom.xml</span>
 </code></pre><pre class="highlight csharp tab-csharp"><code><span class="c1">// run</span>
-<span class="n">dotnet</span> <span class="k">add</span> <span class="n">package</span> <span class="n">SynapsesCSharp</span> <span class="p">--</span><span class="n">version</span> <span class="m">7.2</span><span class="p">.</span><span class="m">1</span>
+<span class="n">dotnet</span> <span class="k">add</span> <span class="n">package</span> <span class="n">SynapsesCSharp</span> <span class="p">--</span><span class="n">version</span> <span class="m">7.3</span><span class="p">.</span><span class="m">0</span>
 <span class="c1">// in the directory of your project</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// add
 </span><span class="n">libraryDependencies</span> <span class="o">+=</span>
-  <span class="s">"com.github.mrdimosthenis"</span> <span class="o">%%</span> <span class="s">"synapses"</span> <span class="o">%</span> <span class="s">"7.2.1"</span>
+  <span class="s">"com.github.mrdimosthenis"</span> <span class="o">%%</span> <span class="s">"synapses"</span> <span class="o">%</span> <span class="s">"7.3.0"</span>
 <span class="c1">// to build.sbt
 </span></code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="c1">// run
-</span><span class="n">dotnet</span> <span class="n">add</span> <span class="n">package</span> <span class="nc">Synapses</span> <span class="o">--</span><span class="n">version</span> <span class="mi">7</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">1</span>
+</span><span class="n">dotnet</span> <span class="n">add</span> <span class="n">package</span> <span class="nc">Synapses</span> <span class="o">--</span><span class="n">version</span> <span class="mi">7</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">0</span>
 <span class="c1">// in the directory of your project
 </span></code></pre><h2 id='neural-network'>Neural Network</h2><h3 id='create-a-neural-network'>Create a neural network</h3>
 <p>Import <code>Synapses</code>, call <code>NeuralNetwork.init</code> and provide the size of each <em>layer</em>.</p>
@@ -520,6 +523,19 @@ If you want to customize the <em>activation functions</em> and the <em>weight di
             <span class="n">activationF</span><span class="p">,</span>
             <span class="n">weightInitF</span>
         <span class="p">)</span>
+</code></pre><h2 id='visualize-a-neural-network'>Visualize a neural network</h2>
+<p>Call <code>NeuralNetwork.toSvg</code> to take a brief look at its <em>svg drawing</em>.</p>
+
+<p><img src="https://github.com/mrdimosthenis/Synapses/blob/master/network-drawing.png?raw=true" alt="Network Drawing" /></p>
+
+<p>The color of each neuron depends on its <em>activation function</em>
+while the transparency of the synapses depends on their <em>weight</em>.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">NeuralNetwork</span><span class="p">.</span><span class="nx">toSvg</span><span class="p">(</span><span class="nx">customizedNetwork</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">svg</span> <span class="o">=</span> <span class="n">NeuralNetwork</span><span class="o">.</span><span class="n">toSvg</span><span class="p">(</span><span class="n">customizedNetwork</span><span class="p">)</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">svg</span> <span class="o">=</span> <span class="n">NeuralNetwork</span><span class="o">.</span><span class="na">toSvg</span><span class="o">(</span><span class="n">customizedNetwork</span><span class="o">);</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="kt">string</span> <span class="n">svg</span> <span class="p">=</span> <span class="n">NeuralNetwork</span><span class="p">.</span><span class="nf">toSvg</span><span class="p">(</span><span class="n">customizedNetwork</span><span class="p">);</span>
+</code></pre><pre class="highlight scala tab-scala"><code><span class="k">val</span> <span class="n">svg</span> <span class="k">=</span> <span class="nc">NeuralNetwork</span><span class="o">.</span><span class="n">toSvg</span><span class="o">(</span><span class="n">customizedNetwork</span><span class="o">)</span>
+</code></pre><pre class="highlight fsharp tab-fsharp"><code><span class="k">let</span> <span class="n">svg</span> <span class="p">=</span> <span class="nn">NeuralNetwork</span><span class="p">.</span><span class="n">toSvg</span><span class="p">(</span><span class="n">customizedNetwork</span><span class="p">)</span>
 </code></pre><h2 id='save-and-load-a-neural-network'>Save and load a neural network</h2>
 <p>JSON instances are <strong>compatible</strong> across platforms!
 We can generate, train and save a neural network in Python
